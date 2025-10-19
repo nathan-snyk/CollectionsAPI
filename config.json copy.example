@@ -1,0 +1,4 @@
+{
+  "api_token": "your_snyk_api_token_here",
+  "org_id": "your_snyk_organization_id_here"
+}
