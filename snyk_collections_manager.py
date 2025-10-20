@@ -31,7 +31,7 @@ class SnykCollectionsManager:
         """
         self.api_token = api_token
         self.org_id = org_id
-        self.base_url = "https://api.snyk.io/rest"
+        self.base_url = "https://api.eu.snyk.io/rest"
         self.api_version = "2024-10-15"
         self.headers = {
             'Authorization': f'token {api_token}',
