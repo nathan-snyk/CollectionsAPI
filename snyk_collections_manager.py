@@ -16,6 +16,7 @@ import argparse
 import sys
 from typing import List, Dict
 import time
+from urllib.parse import quote
 
 
 class SnykCollectionsManager:
@@ -49,10 +50,18 @@ class SnykCollectionsManager:
         Returns:
             List of project dictionaries matching the prefix
         """
-        print(f"Retrieving projects with name prefix: '{name_prefix}'")
+        if name_prefix:
+            print(f"Retrieving projects with name prefix: '{name_prefix}'")
+        else:
+            print(f"Retrieving all projects (no prefix filter)")
         
         projects = []
-        url = f"{self.base_url}/orgs/{self.org_id}/projects?version={self.api_version}&names_start_with={name_prefix}"
+        # URL-encode the prefix and only include names_start_with if prefix is not empty
+        if name_prefix:
+            encoded_prefix = quote(name_prefix, safe='')
+            url = f"{self.base_url}/orgs/{self.org_id}/projects?version={self.api_version}&names_start_with={encoded_prefix}"
+        else:
+            url = f"{self.base_url}/orgs/{self.org_id}/projects?version={self.api_version}"
         
         try:
             while url:
