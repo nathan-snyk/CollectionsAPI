@@ -78,6 +78,12 @@ class SnykCollectionsManager:
                 links = data.get('links', {})
                 url = links.get('next')
                 
+                # Handle relative URLs in pagination
+                if url and url.startswith('/'):
+                    # Extract base domain from self.base_url (remove /rest suffix)
+                    base_domain = self.base_url.rsplit('/rest', 1)[0]
+                    url = f"{base_domain}{url}"
+                
                 if url:
                     print(f"Found {len(project_data)} projects on this page, continuing to next page...")
             
@@ -128,6 +134,12 @@ class SnykCollectionsManager:
                 # Check for pagination
                 links = data.get('links', {})
                 url = links.get('next')
+                
+                # Handle relative URLs in pagination
+                if url and url.startswith('/'):
+                    # Extract base domain from self.base_url (remove /rest suffix)
+                    base_domain = self.base_url.rsplit('/rest', 1)[0]
+                    url = f"{base_domain}{url}"
                 
                 if url:
                     print(f"Found {len(collection_data)} collections on this page, continuing to next page...")
